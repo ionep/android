@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Copter Crash</string>
+    <string name="best_id">0</string>
+    <string name="best_default">0</string>
+</resources>

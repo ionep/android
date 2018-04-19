@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Spartans TBS</string>
+    <string name="page1">Home</string>
+    <string name="page2">Book</string>
+    <string name="page3">Get Ticket</string>
+    <string name="page4">Contact Us</string>
+</resources>

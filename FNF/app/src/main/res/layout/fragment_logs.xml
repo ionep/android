@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="fnf.pro.sag.fnf.MainActivity">
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/text"
+        android:layout_marginTop="35dp"
+        android:password="false"
+        android:phoneNumber="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/sms"
+        android:layout_alignEnd="@+id/sms" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call"
+        android:id="@+id/call"
+        android:layout_marginTop="59dp"
+        android:layout_below="@+id/text"
+        android:layout_alignLeft="@+id/sms"
+        android:layout_alignStart="@+id/sms" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Balance"
+        android:id="@+id/balance"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/call"
+        android:layout_alignRight="@+id/sms"
+        android:layout_alignEnd="@+id/sms" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send sms"
+        android:id="@+id/sms"
+        android:layout_below="@+id/balance"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
