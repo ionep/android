@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="minorproject.ionep.codescanner.MainActivity">
+
+    <org.opencv.android.JavaCameraView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myCamera"
+        app:show_fps="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <View
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"
+        android:layout_centerInParent="true"
+        android:id="@+id/line" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/focus2"
+        android:src="@drawable/focus"
+        android:layout_marginRight="111dp"
+        android:layout_marginEnd="111dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:tint="@android:color/holo_red_light" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/focus"
+        android:src="@drawable/focus"
+        android:layout_marginLeft="111dp"
+        android:layout_marginStart="111dp"
+        android:layout_alignTop="@+id/focus2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:tint="@android:color/holo_red_light" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/capture"
+        android:tint="@color/wallet_holo_blue_light"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/capture" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:tint="@color/wallet_holo_blue_light"
+        android:id="@+id/cancel"
+        android:layout_alignTop="@+id/capture"
+        android:layout_toLeftOf="@+id/capture"
+        android:layout_toStartOf="@+id/capture" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/check"
+        android:tint="@color/wallet_holo_blue_light"
+        android:id="@+id/process"
+        android:layout_alignTop="@+id/capture"
+        android:layout_toRightOf="@+id/capture"
+        android:layout_toEndOf="@+id/capture"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1,2"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="50dp"
+        android:id="@+id/table">
+        <TableRow
+            android:background="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:layout_weight="2">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Color "
+                android:layout_margin="0dp"
+                android:layout_column="0"
+                android:background="@drawable/border"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Left "
+                android:layout_margin="0dp"
+                android:layout_column="1"
+                android:background="@drawable/border"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Right "
+                android:layout_margin="0dp"
+                android:layout_column="2"
+                android:background="@drawable/border"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+        </TableRow>
+
+        <TableRow
+            android:background="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Red "
+                android:layout_margin="0dp"
+                android:layout_column="0"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/leftred"
+                android:layout_margin="0dp"
+                android:layout_column="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/rightred"
+                android:layout_margin="0dp"
+                android:layout_column="2"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+        </TableRow>
+
+        <TableRow
+            android:background="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Green "
+                android:layout_margin="0dp"
+                android:layout_column="0"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/leftgreen"
+                android:layout_margin="0dp"
+                android:layout_column="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/rightgreen"
+                android:layout_margin="0dp"
+                android:layout_column="2"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+        </TableRow>
+
+        <TableRow
+            android:background="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" Blue "
+                android:layout_margin="0dp"
+                android:layout_column="0"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/leftblue"
+                android:layout_margin="0dp"
+                android:layout_column="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/rightblue"
+                android:layout_margin="0dp"
+                android:layout_column="2"
+                android:background="@drawable/border"
+                android:gravity="center"
+                />
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_revert"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:tint="@color/black"/>
+
+</RelativeLayout>
