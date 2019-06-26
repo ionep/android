@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,8 +24,11 @@ import java.util.UUID;
 public class KickOff extends AppCompatActivity {
 
     //all the buttons
-    ImageButton up,down,left,right,close;
-    Button sliderLeft,sliderRight,lockOn,lockOff,blUp,blDown,slUp,slDown,hamUp,hammer,hamDown,suspensionUp,suspensionDown;
+    ImageButton up,down,left,right,close,armLeft,armRight;
+    Button armUp,armDown,smallUp,smallDown;
+    SeekBar seekBar;
+    int prevProgress=0;
+    TextView hold;
 
     //variables for bluetooth
     private String address=null;
@@ -36,7 +41,7 @@ public class KickOff extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kick_off);
+        setContentView(R.layout.minor);
 
         //get the passed address of the device
         Intent intent=getIntent();
@@ -48,19 +53,17 @@ public class KickOff extends AppCompatActivity {
         left=(ImageButton) findViewById(R.id.left);
         right=(ImageButton) findViewById(R.id.right);
         close=(ImageButton) findViewById(R.id.close);
-        sliderLeft=(Button) findViewById(R.id.sliderLeft);
-        sliderRight=(Button) findViewById(R.id.sliderRight);
-        lockOn=(Button) findViewById(R.id.lockOn);
-        lockOff=(Button) findViewById(R.id.lockOff);
-        blUp=(Button) findViewById(R.id.blUp);
-        blDown=(Button) findViewById(R.id.blDown);
-        slUp=(Button) findViewById(R.id.slUp);
-        slDown=(Button) findViewById(R.id.slDown);
-        hamUp=(Button) findViewById(R.id.hamUp);
-        hamDown=(Button) findViewById(R.id.hamDown);
-        hammer=(Button) findViewById(R.id.hammer);
-        suspensionUp=(Button) findViewById(R.id.suspensionUp);
-        suspensionDown=(Button) findViewById(R.id.suspensionDown);
+        armLeft=(ImageButton) findViewById(R.id.armLeft);
+        armRight=(ImageButton) findViewById(R.id.armRight);
+        armUp=(Button) findViewById(R.id.armUp);
+        armDown=(Button) findViewById(R.id.armDown);
+        smallUp=(Button) findViewById(R.id.smallUp);
+        smallDown=(Button) findViewById(R.id.smallDown);
+        seekBar=(SeekBar) findViewById(R.id.seekBar);
+        hold=(TextView) findViewById(R.id.hold);
+
+        seekBar.setMax(100);
+        seekBar.setProgress(0);
 
         new ConnectBt().execute();
 
@@ -142,7 +145,7 @@ public class KickOff extends AppCompatActivity {
             }
         });
 
-        blUp.setOnTouchListener(new View.OnTouchListener() {
+        armUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -161,7 +164,7 @@ public class KickOff extends AppCompatActivity {
             }
         });
 
-        blDown.setOnTouchListener(new View.OnTouchListener() {
+        armDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -180,7 +183,7 @@ public class KickOff extends AppCompatActivity {
             }
         });
 
-        slUp.setOnTouchListener(new View.OnTouchListener() {
+        armLeft.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -199,7 +202,7 @@ public class KickOff extends AppCompatActivity {
             }
         });
 
-        slDown.setOnTouchListener(new View.OnTouchListener() {
+        armRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -217,7 +220,8 @@ public class KickOff extends AppCompatActivity {
                 }
             }
         });
-        sliderLeft.setOnTouchListener(new View.OnTouchListener() {
+
+        smallUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -235,7 +239,8 @@ public class KickOff extends AppCompatActivity {
                 }
             }
         });
-        sliderRight.setOnTouchListener(new View.OnTouchListener() {
+
+        smallDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction())
@@ -254,136 +259,34 @@ public class KickOff extends AppCompatActivity {
             }
         });
 
-        suspensionUp.setOnTouchListener(new View.OnTouchListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("K");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-        suspensionDown.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
+                //if increased
+                if(progress>prevProgress)
                 {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("L");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
+                    dataTransfer("X");
+                    hold.setText("Open");
                 }
+                //if decreased
+                else if(progress<prevProgress)
+                {
+                    dataTransfer("Y");
+                    hold.setText("Close");
+                }
+                //set for next iteration
+                prevProgress=progress;
             }
-        });
 
-        hamUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("M");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
             }
-        });
 
-        hammer.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("N");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
-        hamDown.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("O");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        lockOn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("P");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        lockOff.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        dataTransfer("Q");
-                        v.setBackgroundColor(getResources().getColor(R.color.clicked));
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        dataTransfer("S");
-                        v.setBackgroundColor(getResources().getColor(R.color.notclicked));
-                        return true;
-                    default:
-                        return false;
-                }
             }
         });
 

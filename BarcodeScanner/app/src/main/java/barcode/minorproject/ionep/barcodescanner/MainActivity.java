@@ -18,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -41,11 +42,16 @@ public class MainActivity extends AppCompatActivity implements ResultHandler {
     BluetoothSocket btSocket=null;
     private boolean isBtConnected=false;
 
+    int prevTime=0;
+    String oldMsg="";
+
     static final UUID myUUID=UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //get the passed address of the device
         Intent intent=getIntent();
@@ -184,8 +190,14 @@ public class MainActivity extends AppCompatActivity implements ResultHandler {
         builder.setMessage(myResult);
         AlertDialog alertDialog=builder.create();
         alertDialog.show();*/
-        msg(myResult);
-        dataTransfer(myResult);
+        int time=(int) System.currentTimeMillis();
+        int diff=time-prevTime;
+        if(diff>1000 || !oldMsg.equals(myResult)) {
+            msg(myResult);
+            dataTransfer(myResult);
+            oldMsg=myResult;
+            prevTime=time;
+        }
         scannerView.resumeCameraPreview(MainActivity.this);
     }
 
@@ -226,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements ResultHandler {
             if(!connectSuccess)
             {
                 msg("Connection Failed. Is the device available to connect?");
-                //finish();
+                finish();
             }
             else
             {

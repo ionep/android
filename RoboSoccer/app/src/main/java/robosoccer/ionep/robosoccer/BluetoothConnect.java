@@ -91,7 +91,7 @@ public class BluetoothConnect extends AppCompatActivity {
             String info=((TextView) view).getText().toString();
             String address=info.substring(info.length()-17);
 
-            Intent intent=new Intent(BluetoothConnect.this,KickOff.class);
+            Intent intent=new Intent(BluetoothConnect.this,Baale.class);
             intent.putExtra(EXTRA_ADDRESS,address);
 
             startActivity(intent);
